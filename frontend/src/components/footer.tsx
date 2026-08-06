@@ -8,7 +8,7 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-    { href: "#", label: "github" },
+    { href: "https://github.com/gavrieltp", label: "github" },
     { href: "#", label: "linkedin" },
     { href: "#", label: "instagram" },
 ];
