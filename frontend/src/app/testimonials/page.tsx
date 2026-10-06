@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getTestimonials, Testimonial } from "../../data/mockData";
+import { fetchTestimonials } from "../../data/api";
+import { Testimonial } from "../../data/mockData";
 import SkeletonCard from "../../components/SkeletonCard";
 
 export default function TestimonialPage() {
@@ -9,10 +10,10 @@ export default function TestimonialPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchTestimonials() {
+    async function loadTestimonials() {
       try {
         setLoading(true);
-        const data = await getTestimonials();
+        const data = await fetchTestimonials();
         setTestimonialsList(data);
       } catch (error) {
         console.error("Failed to fetch testimonials:", error);
@@ -20,7 +21,7 @@ export default function TestimonialPage() {
         setLoading(false);
       }
     }
-    fetchTestimonials();
+    loadTestimonials();
   }, []);
 
   return (
@@ -40,7 +41,11 @@ export default function TestimonialPage() {
             ? Array.from({ length: 3 }).map((_, idx) => (
                 <SkeletonCard key={idx} variant="testimonial" />
               ))
-            : testimonialsList.map((test) => (
+            : testimonialsList.length === 0 ? (
+                <p className="col-span-full py-10 text-center text-gray-400">
+                  Belum ada data testimoni. Tambahkan data pada tabel <code>testimonials</code> di database.
+                </p>
+              ) : testimonialsList.map((test) => (
                 <div
                   key={test.id}
                   className="p-6 sm:p-8 rounded-2xl bg-gray-900/50 border border-gray-800/50 hover:border-indigo-500/30 transition-all duration-300 flex flex-col"

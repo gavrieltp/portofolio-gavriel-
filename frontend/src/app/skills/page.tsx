@@ -1,17 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getSkills, SkillGroup } from "../../data/mockData";
+import { fetchSkills } from "../../data/api";
+import { SkillGroup } from "../../data/mockData";
 
 export default function SkillsPage() {
   const [skillGroupsList, setSkillGroupsList] = useState<SkillGroup[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchSkills() {
+    async function loadSkills() {
       try {
         setLoading(true);
-        const data = await getSkills();
+        const data = await fetchSkills();
         setSkillGroupsList(data);
       } catch (error) {
         console.error("Failed to fetch skills:", error);
@@ -19,7 +20,7 @@ export default function SkillsPage() {
         setLoading(false);
       }
     }
-    fetchSkills();
+    loadSkills();
   }, []);
 
   return (
@@ -62,7 +63,11 @@ export default function SkillsPage() {
                   </div>
                 </div>
               ))
-            : skillGroupsList.map((group) => (
+            : skillGroupsList.length === 0 ? (
+                <p className="col-span-full py-10 text-center text-gray-400">
+                  Belum ada data skill. Tambahkan data pada tabel <code>skills</code> di database.
+                </p>
+              ) : skillGroupsList.map((group) => (
                 <div
                   key={group.title}
                   className="p-6 sm:p-8 rounded-2xl bg-gray-900/50 border border-gray-800/50"

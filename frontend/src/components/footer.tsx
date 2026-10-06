@@ -1,19 +1,29 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const quickLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
-    { href: "/portfolio", label: "Portfolio" },
+    { href: "/skills", label: "Skills" },
+    { href: "/certificate", label: "Certificates" },
     { href: "/contact", label: "Contact" },
+    { href: "/portfolio", label: "Portfolio" },
+    { href: "/testimonials", label: "Testimonials" },
 ];
 
 const socialLinks = [
     { href: "https://github.com/gavrieltp", label: "github" },
-    { href: "#", label: "linkedin" },
-    { href: "#", label: "instagram" },
+    { href: "https://www.linkedin.com/in/gavriel-tamonob-pasedan-71153842/", label: "linkedin" },
+    { href: "https://www.instagram.com/galvatronzx/", label: "instagram" },
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <footer className="bg-gray-950 border-t border-gray-800/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -72,9 +82,10 @@ export default function Footer() {
             <p className="text-gray-400 text-sm">
                 &copy; {new Date().getFullYear()}  MyPortfolio. All rights reserved.
             </p>
-            <p className="text-gray-600 text-xs">
-            built with Next.js & tailwind css
-            </p>
+            <div className="flex items-center gap-3 text-xs">
+              <p className="text-gray-600">built with Next.js & tailwind css</p>
+              <Link href="/admin" className="text-gray-500 hover:text-indigo-400 transition-colors">Admin</Link>
+            </div>
         </div>
         </div>
     </footer>

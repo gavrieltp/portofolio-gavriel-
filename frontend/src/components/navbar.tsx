@@ -17,6 +17,8 @@ const navLinks = [
 export default function Navbar() {
     const pathname = usePathname();
     const [mobileOpen,setMobileOpen] = useState(false);
+
+    if (pathname.startsWith("/admin")) return null;
     
     return (
         <nav className="fixed top-0 left-0 w-full bg-gray-800 text-white z-50 bg-gray-950/80 backdrop-blur-x1 border-b border-gray-800/50" >
